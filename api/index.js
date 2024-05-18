@@ -1,6 +1,7 @@
 import express from 'express';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
+import userRouter from './routes/user.route.js';
 
 dotenv.config();
 // mongoose.connect("mongodb+srv://mern:Mern@mern.azu3gur.mongodb.net/mern-auth?retryWrites=true&w=majority&appName=mern");
@@ -16,3 +17,5 @@ const app = express();
 app.listen(3000,() =>{
     console.log("server listening 3000");
 });
+
+app.use("/api/user",userRouter);
