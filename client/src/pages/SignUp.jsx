@@ -84,7 +84,9 @@ export default function SignUp() {
           <span className="text-blue-500">Sign In</span>
         </Link>
       </div>
-      <p className="text-red-700 ">{error && "Something went woring"}</p>
+      <p className='text-red-700 mt-5'>
+        {error ? error || 'Something went wrong!' : ''}
+      </p>
     </div>
   );
 }
