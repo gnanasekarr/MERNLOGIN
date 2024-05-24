@@ -11,7 +11,7 @@ import OAuth from "../components/OAuth";
 export default function SignIn() {
   const [formData, setFormData] = useState({});
   const { loading, error } = useSelector((state) => state.user);
-  console.log("signin",error);
+  // console.log("signin",loading);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const handleChange = (e) => {
@@ -61,7 +61,7 @@ export default function SignIn() {
         />
 
         <button
-          disable={loading}
+          disable={loading ? "Loading..." : "Sign In"}
           className="bg-slate-700 text-white p-3
          rounded-lg uppercase hover:opacity-95
          disabled:opacitu-80"
