@@ -11,12 +11,13 @@ import OAuth from "../components/OAuth";
 export default function SignIn() {
   const [formData, setFormData] = useState({});
   const { loading, error } = useSelector((state) => state.user);
-  // console.log("signin",loading);
+  console.log("signin",loading);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
   };
+  console.log("final sign in",formData);
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
