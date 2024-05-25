@@ -10,27 +10,27 @@ export const test = (req,res) =>{
 
 //update user
 
-export const updateUser = async (req,res,next) =>{
-    if(req.user.id != req.params.id){
-        return next(errorHandler(401, 'You can update only your account!'));
+export const updateUser = async (req, res, next) =>{
+    if(req.user.id !== req.params.id){
+        return next(errorHandler(401, "you can only update your account"));
     }
     try {
         if(req.body.password){
-            req.body.password = bcryptjs.hashSync(req.body.password, 10);
+            req.body.password = bcryptjs.hashSync(rer.body.password, 10);
+
         }
-        const updateUser = await User.findByIdAndUpdate(
+        const updatedUser = await User.findByIdAndUpdate(
             req.params.id,
             {
-                $set: {
-                    username: req.body.username,
+                $set:{
+                    username:req.body.username,
                     email: req.body.email,
-                    password:req.body.password,
-                    profilePrictures: req.body.profilePrictures,
+                    password: req.body.password,
+                    profilePictures: req.body.profilePictures,
                 },
-            },
-            {new: true}
+            },{new: true}
         );
-        const {password, ...rest} = updateUser._doc;
+        const {password, ...rest} = updatedUser._doc;
         res.status(200).json(rest);
     } catch (error) {
         next(error);
