@@ -2,8 +2,11 @@ import React, { useRef, useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import {getDownloadURL, getStorage, ref, uploadBytesResumable} from 'firebase/storage';
 import {app} from '../firebase';
+import { useDispatch } from "react-redux";
+import {updateUserStart, updateUserSuccess, updateUserFailure} from '../redux/user/userSlice';
 
 export default function Profile() {
+  const dispatch = useDispatch();
   const fileRef = useRef(null);
   const [image, setImage] = useState(undefined);
   const [imagePercent, setImagePercent] = useState(0);
@@ -40,6 +43,33 @@ export default function Profile() {
       );
     }
   );
+  };
+  const handleChange = (e) =>{
+    setFormData({...formData, [e.target.id]: e.target.value});
+  };
+  const handleSubmit = async(e) =>{
+    e.preventDefault();
+    try {
+      dispatch(updateUserStart());
+      const res = await fetch(`/api/user/update/${currentUser._id}`,{
+        method:'POST',
+        headers:{
+          'Content-Type': 'application/json',
+          body: JSON.stringify(formData),
+        }
+      });
+     // console.log("profilesub",currentUser._id);
+      const data = await res.json();
+      console.log("handle",data);
+      if(data.success === false){
+        dispatch(updateUserFailure(data));
+        return;
+      }
+      dispatch(updateUserSuccess(data));
+
+    } catch (error) {
+      dispatch(updateUserFailure(data));
+    }
 
   };
 
@@ -51,7 +81,7 @@ export default function Profile() {
       >
         Profile
       </h1>
-      <form className="flex flex-col gap-4">
+      <form onSubmit={handleSubmit} className="flex flex-col gap-4">
         <input
           type="file"
           ref={fileRef}
@@ -94,6 +124,7 @@ export default function Profile() {
           id="username"
           className="bg-slate-100
          p-3 rounded-lg"
+         onChange={handleChange}
         />
         <input
           defaultValue={currentUser.email}
@@ -102,6 +133,7 @@ export default function Profile() {
           id="email"
           className="bg-slate-100
          p-3 rounded-lg"
+         onChange={handleChange}
         />
         <input
           type="password"
@@ -109,6 +141,7 @@ export default function Profile() {
           id="password"
           className="bg-slate-100
          p-3 rounded-lg"
+         onChange={handleChange}
         />
         <button className="bg-slate-700 text-white p-3 rounded-lg uppercase hover:opacity-90 disabled:opacity-80">
           update
