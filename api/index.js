@@ -4,10 +4,10 @@ import dotenv from 'dotenv';
 import userRouter from './routes/user.route.js';
 import authRouter from './routes/auth.route.js';
 import cookieParser from 'cookie-parser';
+import path from 'path';
 
 
 dotenv.config();
-// mongoose.connect("mongodb+srv://mern:Mern@mern.azu3gur.mongodb.net/mern-auth?retryWrites=true&w=majority&appName=mern");
 
 mongoose.connect(process.env.MONGO).then(() =>{
     console.log("connect t0 mongodb");
@@ -15,7 +15,15 @@ mongoose.connect(process.env.MONGO).then(() =>{
     console.log(err);
 });
 
+const __dirname = path.resolve();
+
 const app = express();
+
+app.use(express.static(path.join(__dirname, '/client/dist')))
+
+app.get('*', (req,res) =>{
+    res.sendFile(path.join(__dirname, 'client','dist','index.html'))
+})
 
 app.use(express.json());
 
