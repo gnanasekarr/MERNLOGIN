@@ -4,7 +4,7 @@ import { errorHandler } from "./error.js";
 
 
 export const verifyToken  = (req, res, next) => {
-    const token = req.cookies.token;
+    const token = req.cookies.accesstoken;
 
     if(!token) return next(errorHandler(401, 'You need to login'));
 
