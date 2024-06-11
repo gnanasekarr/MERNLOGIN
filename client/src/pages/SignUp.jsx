@@ -11,7 +11,7 @@ export default function SignUp() {
   const handleChange = (e) =>{
     setFormData({...formData, [e.target.id]:
        e.target.value});
-  }
+  };
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -28,7 +28,7 @@ export default function SignUp() {
         const data = await res.json();
         setLoading(false);
         console.log("signup",error);
-        if (data.success == false){
+        if (data.success === false){
           setError(true);
           return;
         }
@@ -86,12 +86,12 @@ export default function SignUp() {
           <span className="text-blue-500">Sign In</span>
         </Link>
       </div>
-      <p className='text-red-700 mt-5'>
-        {error.success == false ? error.error : 'Something went wrong!' }
-      </p>
       {/* <p className='text-red-700 mt-5'>
-        {error ? error.message || 'Something went wrong!' : ''}
+        {error.success == false ? error.error : 'Something went wrong!' }
       </p> */}
+      <p className='text-red-700 mt-5'>
+        {error && 'Something went wrong!' }
+      </p>
     </div>
   );
 }

@@ -76,12 +76,12 @@ export default function SignIn() {
           <span className="text-blue-500">Sign UP</span>
         </Link>
       </div>
-      <p className='text-red-700 mt-5'>
-        {error.success == false ? error.error : 'Something went wrong!' }
-      </p>
       {/* <p className='text-red-700 mt-5'>
-        {error ? error.message || 'Something went wrong!' :''}
+        {error.success == false ? error.error : 'Something went wrong!' }
       </p> */}
+      <p className='text-red-700 mt-5'>
+        {error && 'Something went wrong!'}
+      </p>
     </div>
   );
 }
